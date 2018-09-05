@@ -17,10 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    firstOperand = NULL;
-    secondOperand = NULL;
-    isOperatorPressed = FALSE;
-    addPressed = minusPressed = FALSE;
+    [self initCalculator];
 }
 
 
@@ -29,14 +26,21 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-- (IBAction)clearButtonAction:(id)sender {
-    _calculation.text = @"";
-    isOperatorPressed = FALSE;
+-(void)initCalculator {
     firstOperand = NULL;
     secondOperand = NULL;
-    addPressed = minusPressed = FALSE;
+    isOperatorPressed = FALSE;
+    _calculation.text = @"";
+    addPressed = minusPressed = multPressed = dividePressed = FALSE;
+    
+    allowZero = FALSE;
+    isDotPressed = TRUE;
+    
+}
 
+
+- (IBAction)clearButtonAction:(id)sender {
+    [self initCalculator];
 }
 
 - (IBAction)plusOperatorPressed:(id)sender {
@@ -55,11 +59,25 @@
             firstOperand = [NSString stringWithFormat:@"%i",r];
             _calculation.text = [NSString stringWithFormat:@"%i",r];
         }
+        else if(multPressed)
+        {
+            int r = [firstOperand intValue] * [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+
+        }
+        else if(dividePressed)
+        {
+            int r = [firstOperand intValue] / [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+
+        }
         secondOperand = NULL;
     }
     isOperatorPressed = TRUE;
     addPressed = TRUE;
-    minusPressed = FALSE;
+    minusPressed = multPressed = dividePressed = FALSE;
 }
 
 - (IBAction)minusOperatorPressed:(id)sender {
@@ -78,11 +96,25 @@
             firstOperand = [NSString stringWithFormat:@"%i",r];
             _calculation.text = [NSString stringWithFormat:@"%i",r];
         }
+        else if(multPressed)
+        {
+            int r = [firstOperand intValue] * [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+            
+        }
+        else if(dividePressed)
+        {
+            int r = [firstOperand intValue] / [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+            
+        }
         secondOperand = NULL;
     }
     
     isOperatorPressed = TRUE;
-    addPressed = FALSE;
+    addPressed = multPressed = dividePressed = FALSE;
     minusPressed = TRUE;
 }
 
@@ -98,6 +130,18 @@
         int r = [firstOperand intValue] - [secondOperand intValue];
         _calculation.text = [NSString stringWithFormat:@"%i",r];
     }
+    else if(multPressed)
+    {
+        int r = [firstOperand intValue] * [secondOperand intValue];
+        _calculation.text = [NSString stringWithFormat:@"%i",r];
+        
+    }
+    else if(dividePressed)
+    {
+        int r = [firstOperand intValue] / [secondOperand intValue];
+        _calculation.text = [NSString stringWithFormat:@"%i",r];
+    }
+
 }
 
 - (IBAction)numericButtonPressed:(UIButton *)sender{
@@ -130,5 +174,93 @@
         }
     }
     
+}
+
+- (IBAction)dotButtonPressed:(id)sender {
+    if(!isDotPressed)
+    {
+        
+    }
+}
+
+- (IBAction)multiplyOperatorPressed:(id)sender {
+    
+    if(isOperatorPressed)
+    {
+        if(addPressed)
+        {
+            int r = [firstOperand intValue] + [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+        }
+        else if(minusPressed)
+        {
+            int r = [firstOperand intValue] - [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+        }
+        else if(multPressed)
+        {
+            int r = [firstOperand intValue] * [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+            
+        }
+        else if(dividePressed)
+        {
+            int r = [firstOperand intValue] / [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+            
+        }
+        secondOperand = NULL;
+    }
+    
+    isOperatorPressed = TRUE;
+    addPressed = minusPressed = dividePressed = FALSE;
+    multPressed = TRUE;
+}
+
+- (IBAction)divideOperatorPressed:(id)sender {
+    if(isOperatorPressed)
+    {
+        if(addPressed)
+        {
+            int r = [firstOperand intValue] + [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+        }
+        else if(minusPressed)
+        {
+            int r = [firstOperand intValue] - [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+        }
+        else if(multPressed)
+        {
+            int r = [firstOperand intValue] * [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+            
+        }
+        else if(dividePressed)
+        {
+            int r = [firstOperand intValue] / [secondOperand intValue];
+            firstOperand = [NSString stringWithFormat:@"%i",r];
+            _calculation.text = [NSString stringWithFormat:@"%i",r];
+            
+        }
+        secondOperand = NULL;
+    }
+    
+    isOperatorPressed = TRUE;
+    addPressed = minusPressed = multPressed = FALSE;
+    dividePressed = TRUE;
+
+}
+
+- (IBAction)backspacePressed:(id)sender {
+}
+- (IBAction)plusMinusOperatorPressed:(id)sender {
 }
 @end

@@ -13,8 +13,13 @@
     NSString* secondOperand;
     bool isOperatorPressed;
     
+    bool isDotPressed;
+    bool allowZero;
+    
     bool addPressed;
     bool minusPressed;
+    bool multPressed;
+    bool dividePressed;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *calculation;
@@ -23,6 +28,11 @@
 - (IBAction)minusOperatorPressed:(id)sender;
 - (IBAction)equalButtonAction:(id)sender;
 - (IBAction)numericButtonPressed:(UIButton*)sender;
+- (IBAction)dotButtonPressed:(id)sender;
+- (IBAction)multiplyOperatorPressed:(id)sender;
+- (IBAction)divideOperatorPressed:(id)sender;
+- (IBAction)backspacePressed:(id)sender;
+- (IBAction)plusMinusOperatorPressed:(id)sender;
 
 @end
 
