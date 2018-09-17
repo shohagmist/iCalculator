@@ -34,7 +34,7 @@
     addPressed = minusPressed = multPressed = dividePressed = FALSE;
     
     allowZero = FALSE;
-    isDotPressed = TRUE;
+    isDotPressed = FALSE;
     
 }
 
@@ -147,6 +147,12 @@
 - (IBAction)numericButtonPressed:(UIButton *)sender{
     int tag = (int) sender.tag;
     
+    if(tag == 0)
+    {
+        if([_calculation.text length] == 0)
+            return;
+    }
+    
     if(isOperatorPressed == FALSE)
     {
         if(firstOperand == NULL)
@@ -177,9 +183,14 @@
 }
 
 - (IBAction)dotButtonPressed:(id)sender {
-    if(!isDotPressed)
+    
+    NSString *str = _calculation.text;
+
+    if ([str length] > 0 && [str rangeOfString:@"."].location == NSNotFound)
     {
-        
+        firstOperand = [NSString stringWithFormat:@"%@%@", firstOperand, @"."];
+        _calculation.text = firstOperand;
+        isDotPressed = TRUE;
     }
 }
 
@@ -262,5 +273,21 @@
 - (IBAction)backspacePressed:(id)sender {
 }
 - (IBAction)plusMinusOperatorPressed:(id)sender {
+    int r = [_calculation.text intValue];
+    
+    r *= -1;
+    
+    _calculation.text = [NSString stringWithFormat:@"%i",r];
+    
+    if(isOperatorPressed == FALSE)
+    {
+        firstOperand = [NSString stringWithFormat:@"%i",r];
+    }
+    
+    else
+    {
+        secondOperand = [NSString stringWithFormat:@"%i",r];
+    }
+
 }
 @end
